@@ -1,4 +1,0 @@
-2026-01-31 14:36:41,064 - countries.log - INFO - Started generating run id
-2026-01-31 14:36:41,065 - countries.log - INFO - Finished generating run id : 2cc82a7e_41ef_4ec3_a778_2240172079cc
-2026-01-31 14:36:41,079 - countries.log - INFO - Started creating stage table for countries
-2026-01-31 14:36:41,205 - countries.log - INFO - Finished creating stage table for countries

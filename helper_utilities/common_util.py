@@ -7,6 +7,8 @@ import json
 import psycopg2
 import requests
 import uuid
+from psycopg2 import sql
+from psycopg2.extras import json
 
 class common_utilities:
     def __init__(self):
@@ -92,7 +94,7 @@ class common_utilities:
             cursor.execute(f"DROP TABLE IF EXISTS stg.{table_name};")
             cursor.execute(f"""CREATE TABLE stg.{table_name}_{run_id}(
                            value TEXT,
-                           su_domain VARCHAR(50)
+                           run_id VARCHAR(200)
                            );""")
             conn.commit()
             cursor.close()
@@ -108,13 +110,17 @@ class common_utilities:
         except Exception as e:
             raise Exception(f"Error generating run id: {e}")
     
-    def execute_stored_procedure(self,sql_statement):
+    def execute_stored_procedure(self,sp_query):
         try:
+
+            # placeholders=sql.SQL(', ').join(sql.Placeholder() * len(params_list))
+            # query=sql.SQL("CALL {}.{}({})").format(sql.Identifier(sp_schema),sql.Identifier(sp_name),placeholders)
             conn=self.establish_connection_with_db()
             cursor=conn.cursor()
-            cursor.execute(sql_statement)
+            cursor.execute(sp_query)
             conn.commit()
             cursor.close()
             conn.close()
         except Exception as e:
+            print(e)
             raise Exception(f"Error executing stored procedure: {e}")
